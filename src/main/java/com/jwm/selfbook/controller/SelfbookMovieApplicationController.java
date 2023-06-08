@@ -1,6 +1,6 @@
 package com.jwm.selfbook.controller;
 
-import com.jwm.selfbook.SelfbookMovieApplicationResponse;
+import com.jwm.selfbook.response.SelfbookMovieApplicationResponse;
 import com.jwm.selfbook.service.SelfbookMovieApplicationService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class SelfbookMovieApplicationController {
    * @return the response message and HttpStatus.
    */
   @GetMapping("/movie-preferences")
-  public ResponseEntity<String> getMoviePreferences(final List<Integer> movieIds) {
+  public ResponseEntity<String> getMoviePreferences(final Integer movieIds) {
     SelfbookMovieApplicationResponse response = new SelfbookMovieApplicationResponse();
     response.setResponse("Hello World");
     response.setHttpStatus(HttpStatus.OK);

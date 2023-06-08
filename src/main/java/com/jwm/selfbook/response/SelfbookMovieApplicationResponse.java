@@ -1,4 +1,4 @@
-package com.jwm.selfbook;
+package com.jwm.selfbook.response;
 
 import org.springframework.http.HttpStatus;
 
