@@ -7,7 +7,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * This class is used solely to create the INSERT statements for the data.sql file in the resources folder.  Run only if the json file changes.
@@ -19,23 +18,59 @@ public class GenerateDataSql {
 
         try {
             Object obj = jsonParser.parse(new FileReader("movies.json"));
-            System.out.println(obj.toString());
-            JSONObject jsonObject = (JSONObject)obj;
-//            String name = (String)jsonObject.get("Name");
-//            String course = (String)jsonObject.get("Course");
-            JSONArray movies = (JSONArray)jsonObject.get("movies");
-//            System.out.println("Name: " + name);
-//            System.out.println("Course: " + course);
-            System.out.println("Movies:");
-            Iterator iterator = movies.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next());
-            }
+
+            StringBuilder dataSqlSb = new StringBuilder("INSERT INTO MOVIE (id, title) ");
+            JSONObject jsonObject = (JSONObject) obj;
+
+            dataSqlSb.append(addMovies((JSONArray) jsonObject.get("movies")));
+            System.out.println(dataSqlSb.toString());
+            System.out.println("\n\n\n");
+
+            dataSqlSb = new StringBuilder("INSERT INTO USERS (user_id, movie_id) ");
+            dataSqlSb.append(addUsers((JSONArray) jsonObject.get("users")));
+            System.out.println(dataSqlSb.toString());
+            System.out.println("\n\n\n");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private static String addMovies(JSONArray movies) {
+        StringBuilder sb = new StringBuilder("VALUES \n");
+        String comma = "  ";
+        for (Object movie : movies) {
+            JSONObject entry = (JSONObject) movie;
+            sb.append(comma).append("(").append(entry.get("id")).append(", ").append("\'").append(sanitizeObject(entry.get("title"))).append("\'").append(")").append("\n");
+            comma = ", ";
+        }
+        sb.append(";");
+        sb.append("\n");
+        return sb.toString();
+    }
+
+    private static String addUsers(JSONArray users) {
+        StringBuilder sb = new StringBuilder("VALUES \n");
+        String comma = "  ";
+        Long userId = 0L;
+        for(Object user : users) {
+            JSONObject entry = (JSONObject) user;
+            userId = (Long) entry.get("user_id");
+            for (Object movie : (JSONArray) entry.get("movies")) {
+                sb.append(comma).append("(").append(userId).append(", ").append(movie).append(")").append("\n");
+                comma = ", ";
+            }
+            comma = ", ";
+        }
+        sb.append(";");
+        sb.append("\n");
+        return sb.toString();
+    }
+
+    private static String sanitizeObject(Object obj) {
+        return ((String) obj).replaceAll("'", "''");
     }
 }

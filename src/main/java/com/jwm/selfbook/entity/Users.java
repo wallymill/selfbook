@@ -1,6 +1,11 @@
 package com.jwm.selfbook.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
+import java.util.UUID;
 
 /**
  * The database representation of the USERS table, consisisting of a user ID and a movie.
@@ -10,10 +15,18 @@ import jakarta.persistence.*;
 public class Users {
 
     /**
-     * Primary key for the USERS entity, representing a single user.
+     * Primary key for the USERS entity, representing a single user and a single movie.
      */
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    /**
+     * User ID
+     */
+
+    @Column(name = "user_id")
+    private Integer userId;
 
     /**
      * Foreign key to the MOVIE table, representing a MOVIE entity.
@@ -22,12 +35,12 @@ public class Users {
     @JoinColumn
     private Movie movie;
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Movie getMovie() {
