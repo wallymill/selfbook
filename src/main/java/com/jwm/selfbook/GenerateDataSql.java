@@ -26,8 +26,13 @@ public class GenerateDataSql {
             System.out.println(dataSqlSb.toString());
             System.out.println("\n\n\n");
 
+            dataSqlSb = new StringBuilder("INSERT INTO USER (user_id) ");
+            dataSqlSb.append(addUser((JSONArray) jsonObject.get("users")));
+            System.out.println(dataSqlSb.toString());
+            System.out.println("\n\n\n");
+
             dataSqlSb = new StringBuilder("INSERT INTO USERS (user_id, movie_id) ");
-            dataSqlSb.append(addUsers((JSONArray) jsonObject.get("users")));
+            dataSqlSb.append(addUserSelections((JSONArray) jsonObject.get("users")));
             System.out.println(dataSqlSb.toString());
             System.out.println("\n\n\n");
 
@@ -52,7 +57,22 @@ public class GenerateDataSql {
         return sb.toString();
     }
 
-    private static String addUsers(JSONArray users) {
+    private static String addUser(JSONArray users) {
+        StringBuilder sb = new StringBuilder("VALUES \n");
+        String comma = "  ";
+        Long userId = 0L;
+        for(Object user : users) {
+            JSONObject entry = (JSONObject) user;
+            userId = (Long) entry.get("user_id");
+            sb.append(comma).append("(").append(userId).append(")\n");
+            comma = ", ";
+        }
+        sb.append(";");
+        sb.append("\n");
+        return sb.toString();
+    }
+
+    private static String addUserSelections(JSONArray users) {
         StringBuilder sb = new StringBuilder("VALUES \n");
         String comma = "  ";
         Long userId = 0L;

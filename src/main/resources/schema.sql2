@@ -1,0 +1,12 @@
+create table MOVIE (
+  id integer not null,
+  title varchar(255),
+  primary key (id)
+);
+
+create table USERS (
+  movie_id integer unique,
+  user_id integer,
+  id bigint not null,
+  primary key (id)
+);

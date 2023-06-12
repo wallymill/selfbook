@@ -1,18 +1,21 @@
 package com.jwm.selfbook.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The database table that represents the Movie table, consisting of it's unique ID and its Title.
  */
 @Entity
 @Table(name = "MOVIE")
-public class Movie {
+public class Movie implements Serializable {
 
     /**
      * The primary key for the MOVIE entity.
      */
     @Id
+    @JoinColumn(name = "movie_id")
+    @OneToOne()
     private Integer id;
 
     /**
@@ -35,5 +38,13 @@ public class Movie {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
     }
 }
