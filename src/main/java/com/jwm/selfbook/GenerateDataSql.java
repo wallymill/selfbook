@@ -26,10 +26,10 @@ public class GenerateDataSql {
             System.out.println(dataSqlSb.toString());
             System.out.println("\n\n\n");
 
-            dataSqlSb = new StringBuilder("INSERT INTO USER (user_id) ");
-            dataSqlSb.append(addUser((JSONArray) jsonObject.get("users")));
-            System.out.println(dataSqlSb.toString());
-            System.out.println("\n\n\n");
+//            dataSqlSb = new StringBuilder("INSERT INTO USER (user_id) ");
+//            dataSqlSb.append(addUser((JSONArray) jsonObject.get("users")));
+//            System.out.println(dataSqlSb.toString());
+//            System.out.println("\n\n\n");
 
             dataSqlSb = new StringBuilder("INSERT INTO USERS (user_id, movie_id) ");
             dataSqlSb.append(addUserSelections((JSONArray) jsonObject.get("users")));

@@ -44,7 +44,7 @@ public class SelfbookMovieApplicationController {
     SelfbookMovieApplicationResponse response = new SelfbookMovieApplicationResponse();
     response.setResponse("Hello World");
     response.setHttpStatus(HttpStatus.OK);
-//    selfbookMovieApplicationService.findAndSuggestMoviePreferences(movieIds);
+    selfbookMovieApplicationService.findAndSuggestMoviePreferences(movieIds);
     return new ResponseEntity<>(response.getResponse(), response.getHttpStatus());
   }
 

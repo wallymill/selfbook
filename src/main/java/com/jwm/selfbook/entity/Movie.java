@@ -1,35 +1,28 @@
 package com.jwm.selfbook.entity;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Objects;
 
-/**
- * The database table that represents the Movie table, consisting of it's unique ID and its Title.
- */
 @Entity
 @Table(name = "MOVIE")
-public class Movie implements Serializable {
+public class Movie {
 
-    /**
-     * The primary key for the MOVIE entity.
-     */
     @Id
-    @JoinColumn(name = "movie_id")
-    @OneToOne()
-    private Integer id;
+    @Column(name = "movie_id")
+    private Integer movieId;
 
-    /**
-     * The title of the movie.
-     */
-    @Column
+    @Column(name = "title")
     private String title;
 
-    public Integer getId() {
-        return id;
+    public Integer getMovieId() {
+        return movieId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
     public String getTitle() {
@@ -41,9 +34,22 @@ public class Movie implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(movieId, movie.movieId) && Objects.equals(title, movie.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(movieId, title);
+    }
+
+    @Override
     public String toString() {
         return "Movie{" +
-                "id=" + id +
+                "id=" + movieId +
                 ", title='" + title + '\'' +
                 '}';
     }
