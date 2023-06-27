@@ -1,30 +1,18 @@
 package com.jwm.selfbook.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
-@Entity
-@Table(name = "USERS")
-public class Users {
+//@Entity
+//@Table(name = "USER")
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @Column(name = "user_id")
     private Integer userId;
-
-    @JoinColumn(name = "movie_id")
-    @ManyToOne()
-    private Movie movieId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -34,33 +22,23 @@ public class Users {
         this.userId = userId;
     }
 
-    public Movie getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(Movie movieId) {
-        this.movieId = movieId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
-        return Objects.equals(id, users.id) && Objects.equals(userId, users.userId) && Objects.equals(movieId, users.movieId);
+        User user = (User) o;
+        return Objects.equals(userId, user.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, movieId);
+        return Objects.hash(userId);
     }
 
     @Override
     public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", movie_id=" + movieId +
+        return "User{" +
+                "id=" + userId +
                 '}';
     }
 }

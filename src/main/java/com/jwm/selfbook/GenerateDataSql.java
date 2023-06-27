@@ -4,6 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,84 +15,79 @@ import java.io.IOException;
  */
 public class GenerateDataSql {
 
+    static Logger logger = LoggerFactory.getLogger(GenerateDataSql.class);
+    private static final String NEW_LINE = "\n";
+    private static final String NEW_LINES = NEW_LINE + NEW_LINE + NEW_LINE;
+    private static final String VALUE_NL = "VALUES \n";
+    private static final String OPEN_PAREN = "(";
+    private static final String CLOSE_PAREN = (")");
+    private static final String SEMICOLON = ";";
+
     public static void main(String[] args) {
         JSONParser jsonParser = new JSONParser();
 
         try {
             Object obj = jsonParser.parse(new FileReader("movies.json"));
 
-            StringBuilder dataSqlSb = new StringBuilder("INSERT INTO MOVIE (id, title) ");
+            StringBuilder dataSqlSb = new StringBuilder("INSERT INTO MOVIE (movie_id, title) ");
             JSONObject jsonObject = (JSONObject) obj;
 
             dataSqlSb.append(addMovies((JSONArray) jsonObject.get("movies")));
-            System.out.println(dataSqlSb.toString());
-            System.out.println("\n\n\n");
+            logger.info("dataSqlSb:\n  {}", dataSqlSb);
+            logger.info(NEW_LINES);
 
-//            dataSqlSb = new StringBuilder("INSERT INTO USER (user_id) ");
-//            dataSqlSb.append(addUser((JSONArray) jsonObject.get("users")));
-//            System.out.println(dataSqlSb.toString());
-//            System.out.println("\n\n\n");
+//            dataSqlSb = new StringBuilder("INSERT INTO USERS (user_id, movie_id) ");
+            dataSqlSb = new StringBuilder();
+            dataSqlSb.append(addUsersAndMovies((JSONArray) jsonObject.get("users")));
+            logger.info("dataSqlSb:\n  {}", dataSqlSb);
+            logger.info(NEW_LINES);
 
-            dataSqlSb = new StringBuilder("INSERT INTO USERS (user_id, movie_id) ");
-            dataSqlSb.append(addUserSelections((JSONArray) jsonObject.get("users")));
-            System.out.println(dataSqlSb.toString());
-            System.out.println("\n\n\n");
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
 
     }
 
     private static String addMovies(JSONArray movies) {
-        StringBuilder sb = new StringBuilder("VALUES \n");
+        StringBuilder sb = new StringBuilder(VALUE_NL);
         String comma = "  ";
         for (Object movie : movies) {
             JSONObject entry = (JSONObject) movie;
-            sb.append(comma).append("(").append(entry.get("id")).append(", ").append("\'").append(sanitizeObject(entry.get("title"))).append("\'").append(")").append("\n");
+            sb.append(comma).append(OPEN_PAREN).append(entry.get("id")).append(", ").append("\'").append(sanitizeObject(entry.get("title"))).append("\'").append(CLOSE_PAREN).append(NEW_LINE);
             comma = ", ";
         }
-        sb.append(";");
-        sb.append("\n");
+        sb.append(SEMICOLON);
+        sb.append(NEW_LINE);
         return sb.toString();
     }
 
-    private static String addUser(JSONArray users) {
-        StringBuilder sb = new StringBuilder("VALUES \n");
+    private static String addUsersAndMovies(JSONArray users) {
+        StringBuilder user = new StringBuilder("INSERT INTO USERS (user_id) ").append(VALUE_NL);
+        StringBuilder userMovie = new StringBuilder("INSERT INTO USERS_MOVIE (user_id, movie_id) ").append(VALUE_NL);
         String comma = "  ";
-        Long userId = 0L;
-        for(Object user : users) {
-            JSONObject entry = (JSONObject) user;
-            userId = (Long) entry.get("user_id");
-            sb.append(comma).append("(").append(userId).append(")\n");
-            comma = ", ";
-        }
-        sb.append(";");
-        sb.append("\n");
-        return sb.toString();
-    }
+        Long userId;
 
-    private static String addUserSelections(JSONArray users) {
-        StringBuilder sb = new StringBuilder("VALUES \n");
-        String comma = "  ";
-        Long userId = 0L;
-        for(Object user : users) {
-            JSONObject entry = (JSONObject) user;
+        for (Object u : users) {
+            JSONObject entry = (JSONObject) u;
             userId = (Long) entry.get("user_id");
+            user.append(comma).append(OPEN_PAREN).append(userId).append(CLOSE_PAREN).append(NEW_LINE);
             for (Object movie : (JSONArray) entry.get("movies")) {
-                sb.append(comma).append("(").append(userId).append(", ").append(movie).append(")").append("\n");
+                userMovie.append(comma).append(OPEN_PAREN).append(userId).append(", ").append(movie).append(CLOSE_PAREN).append(NEW_LINE);
                 comma = ", ";
             }
             comma = ", ";
         }
-        sb.append(";");
-        sb.append("\n");
-        return sb.toString();
+
+//        userMovie.append(";");
+//        userMovie.append("\n");
+//        return userMovie.toString();
+        user.append(SEMICOLON).append(NEW_LINE);
+        userMovie.append(SEMICOLON).append(NEW_LINE);
+        return new StringBuilder(user).append(userMovie).toString();
+
     }
 
     private static String sanitizeObject(Object obj) {
-        return ((String) obj).replaceAll("'", "''");
+        return ((String) obj).replace("'", "''");
     }
 }
