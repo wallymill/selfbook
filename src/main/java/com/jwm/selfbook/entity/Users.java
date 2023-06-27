@@ -6,9 +6,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Objects;
 
-//@Entity
-//@Table(name = "USER")
-public class User {
+@Entity
+@Table(name = "USERS")
+public class Users {
 
     @Id
     @Column(name = "user_id")
@@ -26,8 +26,8 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(userId, user.userId);
+        Users users = (Users) o;
+        return Objects.equals(userId, users.userId);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + userId +
+        return "Users{" +
+                "userId=" + userId +
                 '}';
     }
 }

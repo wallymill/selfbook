@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "MOVIE")
-public class Movie {
+@Table(name = "MOVIES")
+public class Movies {
 
     @Id
     @Column(name = "movie_id")
@@ -37,7 +37,7 @@ public class Movie {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Movie movie = (Movie) o;
+        Movies movie = (Movies) o;
         return Objects.equals(movieId, movie.movieId) && Objects.equals(title, movie.title);
     }
 

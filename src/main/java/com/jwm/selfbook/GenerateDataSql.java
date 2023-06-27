@@ -29,7 +29,7 @@ public class GenerateDataSql {
         try {
             Object obj = jsonParser.parse(new FileReader("movies.json"));
 
-            StringBuilder dataSqlSb = new StringBuilder("INSERT INTO MOVIE (movie_id, title) ");
+            StringBuilder dataSqlSb = new StringBuilder("INSERT INTO MOVIES (movie_id, title) ");
             JSONObject jsonObject = (JSONObject) obj;
 
             dataSqlSb.append(addMovies((JSONArray) jsonObject.get("movies")));
@@ -63,7 +63,7 @@ public class GenerateDataSql {
 
     private static String addUsersAndMovies(JSONArray users) {
         StringBuilder user = new StringBuilder("INSERT INTO USERS (user_id) ").append(VALUE_NL);
-        StringBuilder userMovie = new StringBuilder("INSERT INTO USERS_MOVIE (user_id, movie_id) ").append(VALUE_NL);
+        StringBuilder userMovie = new StringBuilder("INSERT INTO USERS_MOVIES (user_id, movie_id) ").append(VALUE_NL);
         String comma = "  ";
         Long userId;
 
@@ -78,9 +78,6 @@ public class GenerateDataSql {
             comma = ", ";
         }
 
-//        userMovie.append(";");
-//        userMovie.append("\n");
-//        return userMovie.toString();
         user.append(SEMICOLON).append(NEW_LINE);
         userMovie.append(SEMICOLON).append(NEW_LINE);
         return new StringBuilder(user).append(userMovie).toString();
