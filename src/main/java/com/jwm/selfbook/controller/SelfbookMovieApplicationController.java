@@ -1,10 +1,8 @@
 package com.jwm.selfbook.controller;
 
-import com.jwm.selfbook.response.SelfbookMovieApplicationResponse;
 import com.jwm.selfbook.service.SelfbookMovieApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
