@@ -7,38 +7,38 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "USERS")
-public class Users {
+@Table(name = "CUSTOMERS")
+public class Customers {
 
     @Id
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "customer_id")
+    private Integer customer;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getCustomer() {
+        return customer;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setCustomer(Integer customer) {
+        this.customer = customer;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
-        return Objects.equals(userId, users.userId);
+        Customers customers = (Customers) o;
+        return Objects.equals(this.customer, customers.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId);
+        return Objects.hash(customer);
     }
 
     @Override
     public String toString() {
-        return "Users{" +
-                "userId=" + userId +
+        return "Customers{" +
+                "customer=" + customer +
                 '}';
     }
 }

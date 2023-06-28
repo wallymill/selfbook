@@ -36,9 +36,8 @@ public class GenerateDataSql {
             logger.info("dataSqlSb:\n  {}", dataSqlSb);
             logger.info(NEW_LINES);
 
-//            dataSqlSb = new StringBuilder("INSERT INTO USERS (user_id, movie_id) ");
             dataSqlSb = new StringBuilder();
-            dataSqlSb.append(addUsersAndMovies((JSONArray) jsonObject.get("users")));
+            dataSqlSb.append(addCustomersAndMovies((JSONArray) jsonObject.get("users")));
             logger.info("dataSqlSb:\n  {}", dataSqlSb);
             logger.info(NEW_LINES);
 
@@ -61,9 +60,9 @@ public class GenerateDataSql {
         return sb.toString();
     }
 
-    private static String addUsersAndMovies(JSONArray users) {
-        StringBuilder user = new StringBuilder("INSERT INTO USERS (user_id) ").append(VALUE_NL);
-        StringBuilder userMovie = new StringBuilder("INSERT INTO USERS_MOVIES (user_id, movie_id) ").append(VALUE_NL);
+    private static String addCustomersAndMovies(JSONArray users) {
+        StringBuilder user = new StringBuilder("INSERT INTO CUSTOMERS (customer_id) ").append(VALUE_NL);
+        StringBuilder userMovie = new StringBuilder("INSERT INTO CUSTOMERS_MOVIES (customer_id, movie_id) ").append(VALUE_NL);
         String comma = "  ";
         Long userId;
 

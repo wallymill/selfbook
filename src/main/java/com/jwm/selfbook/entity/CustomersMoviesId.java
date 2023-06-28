@@ -4,24 +4,24 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UsersMoviesId implements Serializable {
+public class CustomersMoviesId implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -6485609871329579174L;
 
-    private Users userId;
-    private Movies movieId;
+    private Customers customers;
+    private Movies movies;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UsersMoviesId that = (UsersMoviesId) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(movieId, that.movieId);
+        CustomersMoviesId that = (CustomersMoviesId) o;
+        return Objects.equals(customers, that.customers) && Objects.equals(movies, that.movies);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, movieId);
+        return Objects.hash(customers, movies);
     }
 }

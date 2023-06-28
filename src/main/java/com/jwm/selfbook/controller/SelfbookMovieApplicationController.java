@@ -41,11 +41,11 @@ public class SelfbookMovieApplicationController {
   @GetMapping("/movie-preferences")
   public ResponseEntity<String> getMoviePreferences(@RequestParam final List<Integer> movieIds) {
     logger.debug("in getMoviePreferences:  {}", movieIds);
-    SelfbookMovieApplicationResponse response = new SelfbookMovieApplicationResponse();
-    response.setResponse("Hello World");
-    response.setHttpStatus(HttpStatus.OK);
-    selfbookMovieApplicationService.findAndSuggestMoviePreferences(movieIds);
-    return new ResponseEntity<>(response.getResponse(), response.getHttpStatus());
+//    SelfbookMovieApplicationResponse response = new SelfbookMovieApplicationResponse();
+//    response.setResponse("Hello World");
+//    response.setHttpStatus(HttpStatus.OK);
+    return selfbookMovieApplicationService.findAndSuggestMoviePreferences(movieIds);
+
   }
 
 }

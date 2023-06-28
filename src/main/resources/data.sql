@@ -71,7 +71,7 @@ INSERT INTO MOVIES (movie_id, title) VALUES
 , (70, 'Psycho (1960)')
 ;
 
-INSERT INTO USERS (user_id) VALUES
+INSERT INTO CUSTOMERS (customer_id) VALUES
   (1)
 , (2)
 , (3)
@@ -879,8 +879,7 @@ INSERT INTO USERS (user_id) VALUES
 , (805)
 , (806)
 ;
-
-INSERT INTO USERS_MOVIES (user_id, movie_id) VALUES
+INSERT INTO CUSTOMERS_MOVIES (customer_id, movie_id) VALUES 
   (1, 5)
 , (1, 9)
 , (1, 12)
