@@ -4,6 +4,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * This is the {@link javax.persistence.IdClass} used for the CUSTOMERS_MOVIES table to create a composite primary key of USERS and MOVIES.
+ */
 public class CustomersMoviesId implements Serializable {
 
     @Serial

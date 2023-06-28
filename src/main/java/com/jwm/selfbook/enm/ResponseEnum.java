@@ -2,6 +2,9 @@ package com.jwm.selfbook.enm;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * This ENUM represents the static response String and HttpStatus value associated with the different scenarios.
+ */
 public enum ResponseEnum {
 
     MOVIE_NOT_FOUND(HttpStatus.NOT_FOUND, "Movie Not Found - Please try again"),

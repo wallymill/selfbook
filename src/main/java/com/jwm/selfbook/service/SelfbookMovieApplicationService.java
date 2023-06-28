@@ -20,14 +20,33 @@ public class SelfbookMovieApplicationService {
 
     Logger logger = LoggerFactory.getLogger(SelfbookMovieApplicationService.class);
 
+    /**
+     * The local instance of {@link MoviesRepository}.
+     */
     private final MoviesRepository moviesRepository;
+
+    /**
+     * The local instance of {@link CustomersMoviesRepository}.
+     */
     private final CustomersMoviesRepository customersMoviesRepository;
 
+    /**
+     * The public constructor used by IOC to create the repositories.
+     *
+     * @param movieRepository
+     * @param customersMoviesRepository
+     */
     public SelfbookMovieApplicationService(final MoviesRepository movieRepository, final CustomersMoviesRepository customersMoviesRepository) {
         this.moviesRepository = movieRepository;
         this.customersMoviesRepository = customersMoviesRepository;
     }
 
+    /**
+     * This service accepts a list of Integers, which represent movie IDs.  From here, the service will utilize the appropriate JPARepository to retrieve Movies and UsersMovies data.
+     *
+     * @param movieList the Integer values that represent a {@link Movies} entry.
+     * @return a ResponseEntity to the user.
+     */
     public ResponseEntity<String> findAndSuggestMoviePreferences(List<Integer> movieList) {
 
         final var movies = moviesRepository.findAllById(movieList);

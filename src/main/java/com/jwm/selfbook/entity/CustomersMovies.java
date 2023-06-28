@@ -8,6 +8,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
+/**
+ * This Hibernate Entity represents the CUSTOMERS_MOVIES table, which is generated from the data.sql file (via the {@link com.jwm.selfbook.GenerateDataSql} process).
+ */
 @Entity
 @Table(name = "CUSTOMERS_MOVIES")
 @IdClass(CustomersMoviesId.class)
