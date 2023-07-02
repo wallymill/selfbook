@@ -58,7 +58,7 @@ public class SelfbookMovieApplicationService {
         logger.debug("usersMovies:  {}", usersMovies);
 
         final var filtered = customersMoviesRepository.findByCustomersInAndMoviesNotIn(usersMovies.stream().map(CustomersMovies::getCustomers).toList(), movies);
-        logger.debug("filtered:  {}", filtered.size());
+        logger.debug("filtered:  {}", filtered);
 
         final var suggestions = moviesRepository.findAllById(filtered.stream().map(customersMovies -> customersMovies.getMovies().getMovieId()).toList());
         logger.debug("suggestions:  {}", suggestions);
